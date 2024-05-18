@@ -18,7 +18,7 @@
         android:layout_height="250dp"
         android:layout_above="@id/answerpanel"
         android:gravity="end|bottom"
-        android:textSize="55sp"
+        android:textSize="45sp"
         android:padding="10dp"
         android:textColor="@color/white"
         />
@@ -32,7 +32,7 @@
         android:layout_marginBottom="1dp"
         android:gravity="end|center_vertical"
         android:textSize="28sp"
-        android:textColor="@color/lightgrey"
+        android:textColor="@color/lighterGrey"
         android:padding="10dp"
         />
 
