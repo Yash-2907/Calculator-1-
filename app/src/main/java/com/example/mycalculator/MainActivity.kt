@@ -143,39 +143,62 @@ class MainActivity : AppCompatActivity() {
 
     fun calculate(q:String):Double
     {
-        println()
-        if(q.contains('-'))
+        var prefix=""
+        var newq=q
+        if(q.startsWith("-"))
         {
-            var sign=""
-            var tempq=q
-            if(tempq.startsWith('-'))
+            prefix="-"
+            newq=q.substring(1)
+        }
+        if(newq.contains('-'))
+        {
+            val splitVal=newq.split("-",limit=2)
+            var one=calculate(splitVal[0])
+            var two=calculate(splitVal[1])
+            if(!prefix.isEmpty())
             {
-                sign="-"
-                tempq=q.substring(1)
+                one=one*(-1.0);
+                prefix=""
             }
-            if(tempq.contains('-'))
-            {
-
-            }
+            return one-two
         }
         else if(q.contains('+'))
         {
-            val splitVal=q.split("+", limit = 2)
-            return calculate(splitVal[0])+calculate(splitVal[1])
+            val splitVal=newq.split("+",limit=2)
+            var one=calculate(splitVal[0])
+            var two=calculate(splitVal[1])
+            if(!prefix.isEmpty())
+            {
+                one=one*(-1.0);
+                prefix=""
+            }
+            return one+two
         }
         else if(q.contains('×'))
         {
-            val splitVal=q.split("×", limit = 2)
-            return calculate(splitVal[0])*calculate(splitVal[1])
+            val splitVal=newq.split("×",limit=2)
+            var one=calculate(splitVal[0])
+            var two=calculate(splitVal[1])
+            if(!prefix.isEmpty())
+            {
+                one=one*(-1.0);
+                prefix=""
+            }
+            return one*two
         }
         else if(q.contains('÷'))
         {
             val splitVal=q.split("÷", limit = 2)
-            val one=calculate(splitVal[0])
-            val two=calculate(splitVal[1])
+            var one=calculate(splitVal[0])
+            var two=calculate(splitVal[1])
             if(two==0.0)
                 print("CANT DIVIDE BY 0")
             else
+                if(!prefix.isEmpty())
+                {
+                    one=one*(-1.0)
+                    prefix=""
+                }
                 return one/two
         }
         else{
