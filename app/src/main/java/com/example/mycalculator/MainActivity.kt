@@ -61,6 +61,16 @@ class MainActivity : AppCompatActivity() {
     }
     fun back(view:View)
     {
+        if(flaganswered)
+        {
+            flagdeci=false;
+            currsize=60F
+            findViewById<TextView>(R.id.questionpanel).textSize=50F
+            findViewById<TextView>(R.id.questionpanel).setTextColor(Color.WHITE)
+            findViewById<TextView>(R.id.answerpanel).setTextColor(Color.GRAY)
+            findViewById<TextView>(R.id.answerpanel).textSize = 30F
+            flaganswered=false
+        }
         var text : String = findViewById<TextView>(R.id.questionpanel).text.toString()
         if (text.isNotEmpty()) {
             findViewById<TextView>(R.id.questionpanel).text= text.substring(0, text.length - 1)
@@ -109,6 +119,16 @@ class MainActivity : AppCompatActivity() {
     }
     fun addTOSsymbol(view:View)
     {
+        if(flaganswered)
+        {
+            flagdeci=false;
+            currsize=60F
+            findViewById<TextView>(R.id.questionpanel).textSize=50F
+            findViewById<TextView>(R.id.questionpanel).setTextColor(Color.WHITE)
+            findViewById<TextView>(R.id.answerpanel).setTextColor(Color.GRAY)
+            findViewById<TextView>(R.id.answerpanel).textSize = 30F
+            flaganswered=false
+        }
             if (flagnum) {
                 if(findViewById<TextView>(R.id.questionpanel).text.length%10==0 && decreasetimes>=0)
                 {
