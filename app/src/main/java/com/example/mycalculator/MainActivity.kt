@@ -18,8 +18,14 @@ class MainActivity : AppCompatActivity() {
     var flagnum: Boolean=false
     var currsize:Float=60F
     var decreasetimes=8
+    var flaganswered: Boolean=false
     fun addToS(view:View)
     {
+        if(flaganswered)
+        {
+            clear(view)
+            flaganswered=false
+        }
         if(findViewById<TextView>(R.id.questionpanel).text.length%10==0 && decreasetimes>=0)
         {
             findViewById<TextView>(R.id.questionpanel).textSize=currsize-5
@@ -58,6 +64,15 @@ class MainActivity : AppCompatActivity() {
         var text : String = findViewById<TextView>(R.id.questionpanel).text.toString()
         if (text.isNotEmpty()) {
             findViewById<TextView>(R.id.questionpanel).text= text.substring(0, text.length - 1)
+        }
+        text = findViewById<TextView>(R.id.questionpanel).text.toString()
+        if(text.endsWith("-")||text.endsWith("+")||text.endsWith("×")||text.endsWith("÷"))
+            flagnum=false
+        else {
+            flagnum = true
+            val q:String=findViewById<TextView>(R.id.questionpanel).text.toString()
+            val ans:Double=calculate(q)
+            findViewById<TextView>(R.id.answerpanel).text=removeTrailingZeroes(ans)
         }
     }
 
@@ -127,6 +142,7 @@ class MainActivity : AppCompatActivity() {
             text2.textSize = 26F
             text2.setTextColor(Color.GRAY)
             findViewById<TextView>(R.id.answerpanel).text=removeTrailingZeroes(ans)
+            flaganswered=true
         }
     }
     fun clear(view:View)
@@ -150,19 +166,7 @@ class MainActivity : AppCompatActivity() {
             prefix="-"
             newq=q.substring(1)
         }
-        if(newq.contains('-'))
-        {
-            val splitVal=newq.split("-",limit=2)
-            var one=calculate(splitVal[0])
-            var two=calculate(splitVal[1])
-            if(!prefix.isEmpty())
-            {
-                one=one*(-1.0);
-                prefix=""
-            }
-            return one-two
-        }
-        else if(q.contains('+'))
+        if(q.contains('+'))
         {
             val splitVal=newq.split("+",limit=2)
             var one=calculate(splitVal[0])
@@ -173,6 +177,18 @@ class MainActivity : AppCompatActivity() {
                 prefix=""
             }
             return one+two
+        }
+        else if(newq.contains('-'))
+        {
+            val splitVal=newq.split("-",limit=2)
+            var one=calculate(splitVal[0])
+            var two=calculate(splitVal[1])
+            if(!prefix.isEmpty())
+            {
+                one=one*(-1.0);
+                prefix=""
+            }
+            return one-two
         }
         else if(q.contains('×'))
         {
