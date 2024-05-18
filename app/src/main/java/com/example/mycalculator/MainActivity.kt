@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import java.lang.ArithmeticException
 import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     var currsize:Float=60F
     var decreasetimes=8
     var flaganswered: Boolean=false
+    var flagerror:Boolean=false
     fun addToS(view:View)
     {
         if(flaganswered)
@@ -34,9 +36,15 @@ class MainActivity : AppCompatActivity() {
         }
            findViewById<TextView>(R.id.questionpanel).append((view as Button).text)
            flagnum=true
-            val q:String=findViewById<TextView>(R.id.questionpanel).text.toString()
-            val ans:Double=calculate(q)
-            findViewById<TextView>(R.id.answerpanel).text=removeTrailingZeroes(ans)
+            val q: String = findViewById<TextView>(R.id.questionpanel).text.toString()
+            val ans: Double = calculate(q)
+            if(flagerror) {
+                Toast.makeText(this, "Cant Divide By Zero", Toast.LENGTH_SHORT).show()
+                findViewById<TextView>(R.id.answerpanel).text=""
+                flagerror=false
+            }
+            else
+            findViewById<TextView>(R.id.answerpanel).text = removeTrailingZeroes(ans)
     }
 
     fun decimal(view:View)
@@ -228,7 +236,10 @@ class MainActivity : AppCompatActivity() {
             var one=calculate(splitVal[0])
             var two=calculate(splitVal[1])
             if(two==0.0)
-                print("CANT DIVIDE BY 0")
+            {
+                flagerror=true
+                return 1.0
+            }
             else
                 if(!prefix.isEmpty())
                 {
